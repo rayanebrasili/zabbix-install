@@ -1,0 +1,32 @@
+Instalando repositório:
+
+# wget https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-3+bionic_all.deb
+# dpkg -i zabbix-release_4.0-3+bionic_all.deb
+# apt update
+
+Intalar agent:
+
+# apt -y install zabbix-agent
+
+
+Configurando agent:
+
+# vim /etc/zabbix/zabbix_agentd.conf
+
+Server= ip do zabbix server:
+
+ServerActive=<IP DO ZABBIX PARA MODO ATIVO> - Se não for utilizar modo ativo, esta linha pode ser comentada.
+
+Hostname=<HOSTNAME DO AGENTE> - se não adicionar Hostname, a linha pode ser comentada.
+
+
+Ativar o serviço e habilitar a inicialização no boot:
+
+# systemctl start zabbix-agent
+# systemctl enable zabbix-agent
+
+
+Liberar porta no iptables:
+
+# iptables -A INPUT -p tcp -s <IP DO SERVIDOR ZABBIX> --dport 10050 -m state --state NEW,ESTABLISHED -j ACCEPT
+
